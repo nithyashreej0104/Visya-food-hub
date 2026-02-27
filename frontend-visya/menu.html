@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- browser tab  -->
+    <title> Visya </title>
+    <link rel="icon" type="image/png" href="img/logos-removebg.png">
+
+    <!-- css styling page  -->
+    <link rel="stylesheet" href="styleuser.css" />
+
+    <!-- front & icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- js alter -->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <!-- Load Components -->
+    <script src="components/load-components.js"></script>
+
+</head>
+
+<body>
+
+    <!-- navbar content -->
+    <div id="navbar-container"></div>
+
+    <!-- whole menu content page  -->
+    <section class="menu">
+
+        <!-- menu content  -->
+        <div class="menucontent">
+            <!-- menu title -->
+            <div class="mname">
+                <h1> OUR MENU </h1>
+            </div>
+
+            <!-- menu navbar  -->
+            <div class="nbar">
+                <div class="filters-wrapper">
+                    <ul class="filters_menu">
+                        <li class="active" data-filter="*">All</li>
+                        <li data-filter=".burger">Burger</li>
+                        <li data-filter=".pizza">Pizza</li>
+                        <li data-filter=".pasta">Pasta</li>
+                        <li data-filter=".fries">Fries</li>
+
+                        <li class="cart-item">
+                            <span class="cart-count">0</span>
+                            <i class="fa-solid fa-cart-shopping" id="cart-icon" aria-label="Open cart"></i>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- item content  -->
+        <div class="itemcontent">
+            <div class="row" id="menuContainer"></div>
+
+            <!-- Cart box  -->
+            <div class="cart">
+                <i class="fa-solid fa-xmark" id="cart-close"></i>
+                <div class="cart-title">Cart Items</div>
+
+                <div class="cart-content"></div>
+
+                <div class="total">
+                    <div class="total-title">Total</div>
+                    <div class="total-price">Rs.0</div>
+                </div>
+
+                <button class="btn-buy" onclick="btn()">Place Order</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- footer content -->
+    <div id="footer-container"></div>
+
+</body>
+
+<!-- javascript page -->
+<script src="food.js"></script>
+
+</html>

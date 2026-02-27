@@ -1,0 +1,180 @@
+<html>
+    
+    <!-- front & icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+footer {
+    background-color:  #888f7f; /* Light beige/cream color from the image */
+    color:white; /* Darker text for readability */
+    padding: 40px 0;
+    width: 100%;
+    font-size: 14px;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between; /* Space out the main sections */
+    padding: 0 20px;
+    flex-wrap: wrap; /* Allows sections to wrap on small screens */
+    text-align: left;
+}
+
+/* --- Headings and Text --- */
+
+.footer-section h2{
+    font-family: Gravitas One;
+    color: #a0522d;
+  
+  /* font-size: 30px; */
+  text-decoration: none;
+}
+
+.footer-section h .footer-section h4 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-weight: bold;
+    color: black; /* Slightly darker heading color */
+    font-size: 16px;
+    /* "Get in touch" has a bit more space above it in the image, you might adjust margin-top */
+}
+
+/* --- List Items (Links) --- */
+
+.footer-section ul {
+    list-style: none;
+    padding: 0;
+    line-height: 1.8; /* Good spacing between links */
+}
+
+.footer-section a {
+    text-decoration: none;
+    color:white;
+    transition: color 0.2s;
+}
+
+.footer-section a:hover {
+    color: #a0522d; /* Hover color */
+}
+
+/* --- Foodie Branding and Copyright --- */
+
+.footer-branding {
+    max-width: 250px;
+    margin-right: 20px;
+}
+
+.copyright {
+    margin-top: 30px; /* Separates it from the social icons */
+    font-size: 0.8em;
+    color:white;
+}
+
+/* --- Social Media Icons --- */
+
+.social-links {
+    display: flex;
+    gap: 8px; /* Space between icons */
+    margin-top: 15px;
+}
+
+.social-links a {
+    display: inline-block;
+    color: #fff;
+  
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    border-radius: 5px; /* Slight rounding for the square icons */
+    font-size: 16px;
+}
+
+/* --- Contact and Payment --- */
+
+.footer-contact-payment {
+    /* To align the payment icons correctly */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-width: 180px;
+}
+
+.contact-info p {
+    margin: 5px 0;
+}
+
+.payment-icons {
+    margin-top: 20px; /* Space between contact info and payment icons */
+    display: flex;
+    gap: 5px;
+}
+
+.payment-icons img {
+    height: 25px; /* Size the payment icons */
+}
+</style>
+<body>
+    <footer>
+    <div class="footer-container">
+        
+        <div class="footer-section footer-branding">
+            <h2>VISYA</h2>
+            <P>Delicious food, made with love and served with care.</P>
+            <div class="social-links">
+                <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>
+                <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#" aria-label="Youtibe"><i class="fa-brands fa-youtube"></i></a>
+            </div>
+            <p class="copyright">&copy; 2021 Arid Deb. All rights reserved.</p>
+        </div>
+
+        <div class="footer-section">
+            <h4>Support</h4>
+            <ul>
+                <li><a href="#">Account</a></li>
+                <li><a href="#">Support Center</a></li>
+                <li><a href="#">Feedback</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-section">
+            <h4>Our Menu</h4>
+            <ul>
+                <li><a href="menu.html">Burger</a></li>
+                <li><a href="menu.html">Pizza</a></li>
+                <li><a href="menu.html">Fries</a></li>
+                <li><a href="menu.html">Pasta</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-section">
+            <h4>Useful Links</h4>
+            <ul>
+                <li><a href="#">Payment & Tax</a></li>
+                <li><a href="#">Term of Service</a></li>
+                <li><a href="#">Privacy Policy</a></li>
+                <li><a href="about.html">About Us</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-section footer-contact-payment">
+            <div class="contact-info">
+                <h4>Get in touch</h4>
+                <p><strong>Email:</strong> <a href="mailto:visya@gmail.com">visya@gmail.com</a></p>
+                <p><strong>Phone:</strong> +91 9600606215</p>
+            </div>
+            <div class="payment-icons">
+               <i class="fa-brands fa-cc-visa fa-lg  payment-icon" style="color: #fbc80e;"></i>
+               <i class="fa-brands fa-cc-mastercard fa-lg payment-icon" style="color: #FFD43B;"></i>
+            </div>
+        </div>
+
+    </div>
+</footer>
+
+</body>
+</html>

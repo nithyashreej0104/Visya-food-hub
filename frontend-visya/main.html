@@ -1,0 +1,262 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- browser tab  -->
+    <title> Visya </title>
+    <link rel="icon" type="image/png" href="img/logos-removebg.png">
+
+    <!-- css styling page  -->
+    <!-- <link href="style.css" rel="stylesheet" /> -->
+    <link rel="stylesheet" href="styleuser.css" />
+
+    <!-- front & icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- js alter -->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    
+    <!-- Load Components -->
+    <script src="components/load-components.js"></script>
+
+</head>
+
+<body>
+    <div class="hero-area">
+
+        <!-- navbar -->
+        <div id="navbar-container"></div>
+
+        <!-- hero content -->
+
+        <div class="hero-content">
+            <h1>Welcome to Foodie Hub</h1>
+            <p>Serving delicious burgers, cheesy pizzas, crispy fries, and creamy pastas - all made fresh with love.
+                Enjoy the perfect blend of taste, quality, and quick service, just for you.</p>
+            <a href="booktable.html" class="btn">Order Now</a> <!-- link text OK -->
+        </div>
+
+    </div>
+
+    <!-- menu content -->
+
+    <section class="menu">
+        <div class="menucontent">
+            <div class="mname">
+                <h1> OUR MENU </h1>
+            </div>
+            <div class="nbar">
+
+                <!-- item fitters -->
+
+                <ul class="filters_menu">
+                    <li class="active" data-filter="*">All</li>
+                    <li data-filter=".burger">Burger</li>
+                    <li data-filter=".pizza">Pizza</li>
+                    <li data-filter=".pasta">Pasta</li>
+                    <li data-filter=".fries">Fries</li>
+                </ul>
+
+            </div>
+        </div>
+
+        <div class="row" id="homeMenuContainer">
+            <!-- Dynamic menu items will load here -->
+        </div>
+
+    </section>
+
+    <!-- about us  -->
+
+    <div class="about">
+
+        <!-- content image -->
+        <div class="a-img">
+            <img src="img/contentimg.png" alt="About Visya restaurant">
+        </div>
+        <!-- about content -->
+        <div class="a-content">
+            <div>
+                <h1>We Are Visya</h1>
+            </div>
+            <div>
+                <p>
+                    At Visya, we believe food is more than just a meal - it's an experience.
+                    From sizzling burgers and cheesy pizzas to creamy pastas and crispy fries,
+                    we craft every dish with love, using only fresh and high-quality ingredients.
+                </p>
+
+                <!-- hidden content -->
+                <p id="moreText" style="display: none;">
+                    Our mission is to bring people together through delicious food, quick service,
+                    and a warm atmosphere. Whether you're dining in or ordering online,
+                    we promise to serve you food that's fast, flavorful, and unforgettable.
+                    We are constantly innovating to create new recipes and exciting flavors
+                    so every visit feels special.
+                </p>
+            </div>
+            <!-- javascript call pannau -->
+            <div><a id="readMoreBtn" class="btn">Read More</a></div>
+
+        </div>
+    </div>
+
+    <!-- table booking -->
+
+    <div class="booking1">
+
+        <div class="book-table">
+            <h2>Book A Table </h2> <br>
+
+            <form class="details">
+                <label for="name"></label>
+                <input type="text" id="name" placeholder="your name"><br>
+                <label for="email"></label><br>
+                <input type="email" id="email" placeholder="your email"><br>
+                <label for="number"></label><br>
+                <input type="text" id="number" placeholder="phone number "><br>
+                <label for="myDropdown"></label> <br>
+                <select id="myDropdown" name="selectedOption" placeholder="how many persons ">
+                    <option value="" how many person> ---how many person--- </option>
+                    <option value="option1">2</option>
+                    <option value="option2">3</option>
+                    <option value="option3">4</option>
+                    <option value="option3">4</option>
+                </select><br>
+                <label for="number"></label><br>
+                <input type="date"><br>
+                <br>
+
+                <button type="button" onclick="handleBooking()">Book Now</button>
+            </form>
+        </div>
+        <!-- <div class="b-img">
+            <img src="img/back.png">
+        </div> -->
+    </div>
+
+    <!-- footer content -->
+    <div id="footer-container"></div>
+    
+    <!-- javascript page  -->
+    <script src="food.js"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+        const container = document.getElementById("homeMenuContainer");
+        if (!container) return;
+
+        const normalizeCategoryClass = (value) =>
+            String(value || "")
+                .toLowerCase()
+                .replace(/[^a-z0-9_-]/g, "");
+
+        const createCard = (item, index) => {
+            const card = document.createElement("div");
+            const categoryClass = normalizeCategoryClass(item.category);
+            card.className = categoryClass ? `items ${categoryClass}` : "items";
+            card.dataset.homeIndex = String(index);
+
+            const box = document.createElement("div");
+            box.className = "box";
+
+            const imgBox = document.createElement("div");
+            imgBox.className = "img-box";
+
+            const img = document.createElement("img");
+            img.src = String(item.image_url || "");
+            img.alt = String(item.name || "Menu item");
+            img.width = 200;
+
+            imgBox.appendChild(img);
+
+            const details = document.createElement("div");
+            details.className = "details-box";
+
+            const title = document.createElement("h3");
+            title.textContent = String(item.name || "");
+
+            const desc = document.createElement("p");
+            desc.textContent = String(item.description || "");
+
+            details.appendChild(title);
+            details.appendChild(desc);
+
+            const option = document.createElement("div");
+            option.className = "option";
+
+            const price = document.createElement("h4");
+            price.textContent = `Rs ${Number(item.price || 0)}`;
+
+            const cartLink = document.createElement("a");
+            const icon = document.createElement("i");
+            icon.className = "fa-solid fa-cart-shopping";
+            cartLink.appendChild(icon);
+
+            option.appendChild(price);
+            option.appendChild(cartLink);
+
+            box.appendChild(imgBox);
+            box.appendChild(details);
+            box.appendChild(option);
+            card.appendChild(box);
+
+            return card;
+        };
+
+        try {
+            const response = await fetch("http://localhost:3000/api/menu/admin");
+            const data = await response.json();
+
+            container.innerHTML = "";
+
+            const availableItems = Array.isArray(data)
+                ? data.filter(item => item && item.status === "available")
+                : [];
+
+            availableItems.forEach((item, index) => {
+                container.appendChild(createCard(item, index));
+            });
+
+            const filterButtons = document.querySelectorAll(".filters_menu li[data-filter]");
+
+            function applyHomeFilterView(filterValue) {
+                const allCards = container.querySelectorAll(".items");
+
+                if (filterValue === "*") {
+                    allCards.forEach((card, index) => {
+                        card.style.display = index < 8 ? "flex" : "none";
+                    });
+                    return;
+                }
+
+                const category = normalizeCategoryClass(filterValue.slice(1));
+                allCards.forEach(card => {
+                    card.style.display = card.classList.contains(category) ? "flex" : "none";
+                });
+            }
+
+            applyHomeFilterView("*");
+
+            filterButtons.forEach(button => {
+                button.addEventListener("click", () => {
+                    applyHomeFilterView(button.dataset.filter || "*");
+                });
+            });
+
+        } catch (error) {
+            console.error("Failed to load menu:", error);
+            container.textContent = "Failed to load menu.";
+            container.style.color = "red";
+        }
+    });
+    </script>
+</body>
+
+</html>
+
+

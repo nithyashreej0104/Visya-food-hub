@@ -1,0 +1,525 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script>
+      if (sessionStorage.getItem("adminLoggedIn") !== "true") {
+        window.location.href = "../login.html";
+      }
+    </script>
+    <title>Visya Admin Dashboard</title>
+    <link rel="icon" type="image/png" href="../../img/logos-removebg.png">
+    <link rel="stylesheet" href="../assets/vendors/mdi/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="../assets/vendors/ti-icons/css/themify-icons.css">
+    <link rel="stylesheet" href="../assets/vendors/css/vendor.bundle.base.css">
+    <link rel="stylesheet" href="../assets/vendors/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/visya-theme.css">
+  </head>
+  <body class="page-soft-bg">
+    <div class="container-scroller">
+      <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+        <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-start">
+          <a class="navbar-brand d-flex align-items-center" href="../index.html">
+            <img src="../../img/logo-removebgnew.png"
+                 alt="Visya Food Hub"
+                 class="brand-logo">
+          </a>
+        </div>
+        <div class="navbar-menu-wrapper d-flex align-items-center justify-content-between">
+          <button class="navbar-toggler navbar-toggler-right align-self-center visya-hamburger" id="sidebarToggle" type="button" aria-label="Toggle sidebar">
+            <span class="mdi mdi-menu"></span>
+          </button>
+          <ul class="navbar-nav navbar-nav-right">
+            <li class="nav-item">
+              <a class="nav-link" href="#" id="logoutNav">
+                <i class="mdi mdi-logout me-1"></i>Logout
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      <div class="container-fluid page-body-wrapper">
+        <nav class="sidebar sidebar-offcanvas" id="sidebar">
+          <ul class="nav">
+            <li class="nav-item nav-profile">
+              <a href="#" class="nav-link">
+                <div class="nav-profile-text d-flex flex-column">
+                  <span class="fw-semibold text-white">Admin</span>
+                  <span class="text-secondary text-small">Administrator</span>
+                </div>
+              </a>
+            </li>
+            <li class="nav-item"><a class="nav-link" href="../index.html"><span class="menu-title">Dashboard</span><i class="mdi mdi-home menu-icon"></i></a></li>
+            <li class="nav-item"><a class="nav-link" href="orders.html"><span class="menu-title">Orders</span><i class="mdi mdi-cart menu-icon"></i></a></li>
+            <li class="nav-item"><a class="nav-link" href="bookings.html"><span class="menu-title">Bookings</span><i class="mdi mdi-calendar-check menu-icon"></i></a></li>
+            <li class="nav-item active"><a class="nav-link" href="menu.html"><span class="menu-title">Menu Management</span><i class="mdi mdi-food menu-icon"></i></a></li>
+            <li class="nav-item"><a class="nav-link" href="#" id="logoutSidebar"><span class="menu-title">Logout</span><i class="mdi mdi-logout menu-icon"></i></a></li>
+          </ul>
+        </nav>
+
+        <div class="main-panel main-content">
+          <div class="content-wrapper">
+            <div class="page-header">
+              <h3 class="page-title">
+                <span class="page-title-icon bg-gradient-primary text-white me-2">
+                  <i class="mdi mdi-food"></i>
+                </span> Menu Management
+              </h3>
+            </div>
+
+            <div id="adminAlert"></div>
+
+            <div class="card mb-4" id="menuFormCard">
+              <div class="card-body">
+                <h4 class="card-title">Add Menu Item</h4>
+                <form id="menuForm" class="row g-3">
+                  <input type="hidden" id="editItemId">
+
+                  <div class="col-md-4">
+                    <input class="form-control" type="text" id="menuName" placeholder="Item name" required>
+                  </div>
+                  <div class="col-md-4">
+                    <select class="form-control" id="menuCategory" required>
+                      <option value="">Select category</option>
+                      <option value="burger">Burger</option>
+                      <option value="pizza">Pizza</option>
+                      <option value="pasta">Pasta</option>
+                      <option value="fries">Fries</option>
+                    </select>
+                  </div>
+                  <div class="col-md-4">
+                    <input class="form-control" type="number" min="1" step="0.01" id="menuPrice" placeholder="Price" required>
+                  </div>
+
+                  <div class="col-md-6">
+                    <label for="menuImageFile" class="form-label">Upload Image</label>
+                    <input class="form-control" type="file" id="menuImageFile" accept="image/*">
+                  </div>
+                  <div class="col-md-6">
+                    <label for="menuImageUrl" class="form-label">Or Image URL (optional fallback)</label>
+                    <input class="form-control" type="text" id="menuImageUrl" placeholder="https://...">
+                  </div>
+
+                  <div class="col-12">
+                    <label class="form-label">Image Preview</label>
+                    <div>
+                      <img id="menuImagePreview" alt="Image preview" style="max-width: 180px; display: none; border-radius: 8px;">
+                    </div>
+                  </div>
+
+                  <div class="col-12">
+                    <textarea class="form-control" id="menuDescription" rows="3" placeholder="Description" required></textarea>
+                  </div>
+
+                  <div class="col-12 d-flex gap-2">
+                    <button type="submit" id="menuSubmitBtn" class="btn btn-primary">Add Item</button>
+                    <button type="button" id="clearMenuFormBtn" class="btn btn-secondary">Clear Form</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-body">
+                <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
+                  <h4 class="card-title mb-0">Menu Items</h4>
+                  <input id="menuSearchInput" class="form-control" style="max-width: 280px;" type="text" placeholder="Search menu item...">
+                </div>
+
+                <div class="table-responsive">
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Category</th>
+                        <th>Price</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody id="menuTableBody"></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="deleteConfirmModal" class="modal" tabindex="-1" style="display: none; background: rgba(0, 0, 0, 0.5);">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Confirm Delete</h5>
+            <button type="button" class="btn-close" id="closeDeleteModalBtn" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <p id="deleteModalMessage" class="mb-0">Delete this menu item?</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" id="cancelDeleteBtn">Cancel</button>
+            <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Delete</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="../assets/vendors/js/vendor.bundle.base.js"></script>
+    <script src="../assets/js/off-canvas.js"></script>
+    <script src="../assets/js/misc.js"></script>
+    <script src="../assets/js/visya-admin.js"></script>
+    <script>
+      const MENU_API_BASE = "http://localhost:3000/api/menu";
+      const MAX_IMAGE_SIZE_BYTES = 2 * 1024 * 1024;
+
+      let allMenuItems = [];
+      let selectedImageBase64 = "";
+      let deleteTargetItemId = null;
+      let alertTimer = null;
+
+      function escapeHtml(value) {
+        return String(value ?? "")
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll('"', "&quot;")
+          .replaceAll("'", "&#39;");
+      }
+
+      function showAlert(type, message) {
+        const alertContainer = document.getElementById("adminAlert");
+        if (!alertContainer) return;
+
+        const alertClass = type === "success" ? "alert-success" : "alert-danger";
+        alertContainer.innerHTML = `<div class="alert ${alertClass}" role="alert">${escapeHtml(message)}</div>`;
+
+        if (alertTimer) {
+          clearTimeout(alertTimer);
+        }
+
+        alertTimer = setTimeout(() => {
+          alertContainer.innerHTML = "";
+        }, 3000);
+      }
+
+      function setButtonLoading(button, isLoading, loadingText) {
+        if (!button) return;
+
+        if (isLoading) {
+          if (!button.dataset.originalText) button.dataset.originalText = button.textContent;
+          button.disabled = true;
+          button.textContent = loadingText || "Processing...";
+        } else {
+          button.disabled = false;
+          if (button.dataset.originalText) {
+            button.textContent = button.dataset.originalText;
+          }
+        }
+      }
+
+      function getStatusBadgeClass(status) {
+        return status === "available" ? "badge badge-success" : "badge badge-danger";
+      }
+
+      function setImagePreview(src) {
+        const previewEl = document.getElementById("menuImagePreview");
+        if (!previewEl) return;
+
+        if (!src) {
+          previewEl.src = "";
+          previewEl.style.display = "none";
+          return;
+        }
+
+        previewEl.src = src;
+        previewEl.style.display = "inline-block";
+      }
+
+      function clearMenuForm() {
+        const form = document.getElementById("menuForm");
+        if (!form) return;
+
+        form.reset();
+        selectedImageBase64 = "";
+        setImagePreview("");
+
+        const editInput = document.getElementById("editItemId");
+        if (editInput) editInput.value = "";
+
+        const submitBtn = document.getElementById("menuSubmitBtn");
+        if (submitBtn) {
+          submitBtn.textContent = "Add Item";
+          submitBtn.dataset.originalText = "Add Item";
+          submitBtn.disabled = false;
+        }
+
+        const alertContainer = document.getElementById("adminAlert");
+        if (alertContainer) alertContainer.innerHTML = "";
+      }
+
+      function validateFormPayload(payload) {
+        if (!payload.name.trim()) return "Item name is required";
+        if (!payload.category) return "Please select a category";
+        if (Number.isNaN(Number(payload.price)) || Number(payload.price) <= 0) return "Price must be a valid positive number";
+        if (!payload.image_url.trim()) return "Please provide an image (upload or URL)";
+        if (!payload.description.trim()) return "Description is required";
+        return null;
+      }
+
+      function renderMenuTable() {
+        const tableBody = document.getElementById("menuTableBody");
+        const searchInput = document.getElementById("menuSearchInput");
+        if (!tableBody) return;
+
+        const query = String(searchInput?.value || "").trim().toLowerCase();
+        const filteredItems = allMenuItems.filter((item) => {
+          if (!query) return true;
+          return String(item.name || "").toLowerCase().includes(query);
+        });
+
+        if (filteredItems.length === 0) {
+          tableBody.innerHTML = '<tr><td colspan="6">No menu items found.</td></tr>';
+          return;
+        }
+
+        tableBody.innerHTML = filteredItems.map((item) => {
+          const itemId = Number(item.item_id);
+          const nextStatus = item.status === "available" ? "unavailable" : "available";
+
+          return `
+            <tr>
+              <td>${Number.isFinite(itemId) ? itemId : "-"}</td>
+              <td>${escapeHtml(item.name || "-")}</td>
+              <td>${escapeHtml(item.category || "-")}</td>
+              <td>Rs ${Number(item.price || 0).toFixed(2)}</td>
+              <td><span class="${getStatusBadgeClass(item.status)}">${escapeHtml(item.status || "-")}</span></td>
+              <td>
+                <button class="btn btn-sm btn-info me-1" onclick="startEditMenuItem(${itemId})">Edit</button>
+                <button class="btn btn-sm btn-warning me-1" onclick="toggleMenuStatus(${itemId}, '${nextStatus}', this)">${item.status === "available" ? "Disable" : "Enable"}</button>
+                <button class="btn btn-sm btn-danger" onclick="openDeleteModal(${itemId})">Delete</button>
+              </td>
+            </tr>
+          `;
+        }).join("");
+      }
+
+      async function loadMenuItems() {
+        const tableBody = document.getElementById("menuTableBody");
+        if (!tableBody) return;
+
+        try {
+          const res = await fetch(`${MENU_API_BASE}/admin`);
+          if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+          const items = await res.json();
+          allMenuItems = Array.isArray(items) ? items : [];
+          renderMenuTable();
+        } catch (error) {
+          console.error("Error loading menu items:", error);
+          tableBody.innerHTML = `<tr><td colspan="6">Failed to load menu items: ${escapeHtml(error.message)}</td></tr>`;
+          showAlert("error", "Failed to load menu items");
+        }
+      }
+
+      function startEditMenuItem(itemId) {
+        const item = allMenuItems.find((menuItem) => Number(menuItem.item_id) === Number(itemId));
+        if (!item) {
+          showAlert("error", "Menu item not found");
+          return;
+        }
+
+        document.getElementById("editItemId").value = String(item.item_id);
+        document.getElementById("menuName").value = item.name || "";
+        document.getElementById("menuCategory").value = item.category || "";
+        document.getElementById("menuPrice").value = Number(item.price || 0);
+        document.getElementById("menuImageUrl").value = item.image_url || "";
+        document.getElementById("menuDescription").value = item.description || "";
+
+        selectedImageBase64 = "";
+        setImagePreview(item.image_url || "");
+
+        const submitBtn = document.getElementById("menuSubmitBtn");
+        submitBtn.textContent = "Update Item";
+        submitBtn.dataset.originalText = "Update Item";
+
+        document.getElementById("menuFormCard")?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+
+      async function toggleMenuStatus(itemId, status, button) {
+        if (!Number.isFinite(Number(itemId)) || Number(itemId) <= 0) return;
+
+        try {
+          setButtonLoading(button, true, "Processing...");
+
+          const res = await fetch(`${MENU_API_BASE}/${itemId}/status`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ status })
+          });
+
+          const data = await res.json().catch(() => ({}));
+          if (!res.ok) throw new Error(data.error || `HTTP ${res.status}`);
+
+          showAlert("success", "Menu item status updated successfully");
+          await loadMenuItems();
+        } catch (error) {
+          console.error("Error updating status:", error);
+          showAlert("error", `Failed to update status: ${error.message}`);
+        } finally {
+          setButtonLoading(button, false);
+        }
+      }
+
+      function openDeleteModal(itemId) {
+        deleteTargetItemId = Number(itemId);
+        if (!Number.isFinite(deleteTargetItemId) || deleteTargetItemId <= 0) {
+          showAlert("error", "Invalid menu item id");
+          return;
+        }
+
+        const modal = document.getElementById("deleteConfirmModal");
+        if (!modal) return;
+
+        modal.style.display = "block";
+        modal.classList.add("show");
+      }
+
+      function closeDeleteModal() {
+        const modal = document.getElementById("deleteConfirmModal");
+        if (!modal) return;
+
+        modal.classList.remove("show");
+        modal.style.display = "none";
+        deleteTargetItemId = null;
+      }
+
+      async function confirmDeleteMenuItem() {
+        if (!Number.isFinite(deleteTargetItemId) || deleteTargetItemId <= 0) {
+          closeDeleteModal();
+          return;
+        }
+
+        const confirmBtn = document.getElementById("confirmDeleteBtn");
+
+        try {
+          setButtonLoading(confirmBtn, true, "Processing...");
+
+          const res = await fetch(`${MENU_API_BASE}/${deleteTargetItemId}`, { method: "DELETE" });
+          const data = await res.json().catch(() => ({}));
+          if (!res.ok) throw new Error(data.error || `HTTP ${res.status}`);
+
+          showAlert("success", "Menu item deleted successfully");
+          closeDeleteModal();
+          await loadMenuItems();
+        } catch (error) {
+          console.error("Error deleting item:", error);
+          showAlert("error", `Failed to delete item: ${error.message}`);
+        } finally {
+          setButtonLoading(confirmBtn, false);
+        }
+      }
+
+      document.getElementById("menuImageFile")?.addEventListener("change", function (event) {
+        const file = event.target.files && event.target.files[0];
+
+        if (!file) {
+          selectedImageBase64 = "";
+          const fallbackUrl = document.getElementById("menuImageUrl")?.value.trim() || "";
+          setImagePreview(fallbackUrl);
+          return;
+        }
+
+        if (file.size > MAX_IMAGE_SIZE_BYTES) {
+          selectedImageBase64 = "";
+          event.target.value = "";
+          setImagePreview("");
+          showAlert("error", "Image size must be 2MB or less");
+          return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = function (loadEvent) {
+          selectedImageBase64 = String(loadEvent.target?.result || "");
+          setImagePreview(selectedImageBase64);
+        };
+        reader.onerror = function () {
+          selectedImageBase64 = "";
+          setImagePreview("");
+          showAlert("error", "Failed to read image file");
+        };
+        reader.readAsDataURL(file);
+      });
+
+      document.getElementById("menuImageUrl")?.addEventListener("input", function (event) {
+        if (!selectedImageBase64) {
+          setImagePreview(String(event.target.value || "").trim());
+        }
+      });
+
+      document.getElementById("menuSearchInput")?.addEventListener("input", renderMenuTable);
+
+      document.getElementById("clearMenuFormBtn")?.addEventListener("click", clearMenuForm);
+
+      document.getElementById("menuForm")?.addEventListener("submit", async function (event) {
+        event.preventDefault();
+
+        const submitBtn = document.getElementById("menuSubmitBtn");
+        const editItemId = Number(document.getElementById("editItemId")?.value || 0);
+        const isEdit = Number.isFinite(editItemId) && editItemId > 0;
+
+        const payload = {
+          name: document.getElementById("menuName")?.value.trim() || "",
+          category: document.getElementById("menuCategory")?.value || "",
+          price: document.getElementById("menuPrice")?.value || "",
+          image_url: selectedImageBase64 || (document.getElementById("menuImageUrl")?.value.trim() || ""),
+          description: document.getElementById("menuDescription")?.value.trim() || ""
+        };
+
+        const validationError = validateFormPayload(payload);
+        if (validationError) {
+          showAlert("error", validationError);
+          return;
+        }
+
+        try {
+          setButtonLoading(submitBtn, true, "Processing...");
+
+          const url = isEdit ? `${MENU_API_BASE}/${editItemId}` : MENU_API_BASE;
+          const method = isEdit ? "PUT" : "POST";
+
+          const res = await fetch(url, {
+            method,
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+          });
+
+          const data = await res.json().catch(() => ({}));
+          if (!res.ok) throw new Error(data.error || data.message || `HTTP ${res.status}`);
+
+          showAlert("success", isEdit ? "Menu item updated successfully" : "Menu item added successfully");
+          await loadMenuItems();
+          clearMenuForm();
+        } catch (error) {
+          console.error("Error saving menu item:", error);
+          showAlert("error", `Failed to save menu item: ${error.message}`);
+        } finally {
+          setButtonLoading(submitBtn, false);
+        }
+      });
+
+      document.getElementById("confirmDeleteBtn")?.addEventListener("click", confirmDeleteMenuItem);
+      document.getElementById("cancelDeleteBtn")?.addEventListener("click", closeDeleteModal);
+      document.getElementById("closeDeleteModalBtn")?.addEventListener("click", closeDeleteModal);
+
+      document.addEventListener("DOMContentLoaded", loadMenuItems);
+    </script>
+  </body>
+</html>
+
+
+

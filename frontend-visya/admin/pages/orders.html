@@ -1,0 +1,190 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script>
+      if (sessionStorage.getItem("adminLoggedIn") !== "true") {
+        window.location.href = "../login.html";
+      }
+    </script>
+    <title>Visya Admin Dashboard</title>
+    <link rel="icon" type="image/png" href="../../img/logos-removebg.png">
+    <link rel="stylesheet" href="../assets/vendors/mdi/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="../assets/vendors/ti-icons/css/themify-icons.css">
+    <link rel="stylesheet" href="../assets/vendors/css/vendor.bundle.base.css">
+    <link rel="stylesheet" href="../assets/vendors/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/visya-theme.css">
+  </head>
+  <body class="page-soft-bg">
+    <div class="container-scroller">
+      <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+        <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-start">
+          <a class="navbar-brand d-flex align-items-center" href="../index.html">
+            <img src="../../img/logo-removebgnew.png"
+                 alt="Visya Food Hub"
+                 class="brand-logo">
+          </a>
+        </div>
+        <div class="navbar-menu-wrapper d-flex align-items-center justify-content-between">
+          <button class="navbar-toggler navbar-toggler-right align-self-center visya-hamburger" id="sidebarToggle" type="button" aria-label="Toggle sidebar">
+            <span class="mdi mdi-menu"></span>
+          </button>
+          <ul class="navbar-nav navbar-nav-right">
+            <li class="nav-item">
+              <a class="nav-link" href="#" id="logoutNav">
+                <i class="mdi mdi-logout me-1"></i>Logout
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+      <div class="container-fluid page-body-wrapper">
+        <nav class="sidebar sidebar-offcanvas" id="sidebar">
+          <ul class="nav">
+            <li class="nav-item nav-profile">
+              <a href="#" class="nav-link">
+                <div class="nav-profile-text d-flex flex-column">
+                  <span class="fw-semibold text-white">Admin</span>
+                  <span class="text-secondary text-small">Administrator</span>
+                </div>
+              </a>
+            </li>
+            <li class="nav-item"><a class="nav-link" href="../index.html"><span class="menu-title">Dashboard</span><i class="mdi mdi-home menu-icon"></i></a></li>
+            <li class="nav-item active"><a class="nav-link" href="orders.html"><span class="menu-title">Orders</span><i class="mdi mdi-cart menu-icon"></i></a></li>
+            <li class="nav-item"><a class="nav-link" href="bookings.html"><span class="menu-title">Bookings</span><i class="mdi mdi-calendar-check menu-icon"></i></a></li>
+            <li class="nav-item"><a class="nav-link" href="menu.html"><span class="menu-title">Menu Management</span><i class="mdi mdi-food menu-icon"></i></a></li>
+            <li class="nav-item"><a class="nav-link" href="#" id="logoutSidebar"><span class="menu-title">Logout</span><i class="mdi mdi-logout menu-icon"></i></a></li>
+          </ul>
+        </nav>
+
+        <div class="main-panel main-content">
+          <div class="content-wrapper">
+            <div class="page-header">
+              <h3 class="page-title">
+                <span class="page-title-icon bg-gradient-primary text-white me-2">
+                  <i class="mdi mdi-cart"></i>
+                </span> Orders
+              </h3>
+            </div>
+
+            <div class="card">
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th>Order ID</th>
+                        <th>Customer</th>
+                        <th>Total</th>
+                        <th>Status</th>
+                        <th>Date</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody id="ordersTableBody"></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="../assets/vendors/js/vendor.bundle.base.js"></script>
+    <script src="../assets/js/off-canvas.js"></script>
+    <script src="../assets/js/misc.js"></script>
+    <script src="../assets/js/visya-admin.js"></script>
+    <script>
+      function escapeHtml(value) {
+        return String(value ?? "")
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll('"', "&quot;")
+          .replaceAll("'", "&#39;");
+      }
+
+      function getStatusBadgeClass(status) {
+        var normalizedStatus = String(status || "").toLowerCase();
+        if (normalizedStatus === "pending") return "badge badge-warning";
+        if (normalizedStatus === "completed") return "badge badge-success";
+        if (normalizedStatus === "cancelled") return "badge badge-danger";
+        return "badge badge-secondary";
+      }
+
+      function formatDate(value) {
+        var date = new Date(value);
+        if (Number.isNaN(date.getTime())) return "-";
+        return date.toLocaleString();
+      }
+
+      async function loadOrders() {
+        var tableBody = document.getElementById("ordersTableBody");
+        if (!tableBody) return;
+
+        try {
+          var res = await fetch("http://localhost:3000/api/order");
+          if (!res.ok) throw new Error("HTTP " + res.status);
+
+          var orders = await res.json();
+
+          if (!Array.isArray(orders) || orders.length === 0) {
+            tableBody.innerHTML = '<tr><td colspan="6">No orders found.</td></tr>';
+            return;
+          }
+
+          tableBody.innerHTML = orders.map(function (order) {
+            var orderId = Number(order.order_id);
+            var statusText = String(order.status || "pending");
+            var statusClass = getStatusBadgeClass(statusText);
+
+            return `
+              <tr>
+                <td>${Number.isFinite(orderId) ? orderId : "-"}</td>
+                <td>${escapeHtml(order.customer_name || "-")}</td>
+                <td>Rs ${Number(order.total_amount || 0).toFixed(2)}</td>
+                <td><span class="${statusClass}">${escapeHtml(statusText)}</span></td>
+                <td>${escapeHtml(formatDate(order.created_at))}</td>
+                <td>
+                  <button class="btn btn-sm btn-success me-1" onclick="updateOrderStatus(${orderId}, 'completed')">Complete</button>
+                  <button class="btn btn-sm btn-danger" onclick="updateOrderStatus(${orderId}, 'cancelled')">Cancel</button>
+                </td>
+              </tr>
+            `;
+          }).join("");
+        } catch (error) {
+          console.error("Error loading orders:", error);
+          tableBody.innerHTML = `<tr><td colspan="6">Failed to load orders: ${escapeHtml(error.message)}</td></tr>`;
+        }
+      }
+
+      async function updateOrderStatus(orderId, status) {
+        if (!Number.isFinite(orderId) || orderId <= 0) return;
+
+        try {
+          var res = await fetch(`http://localhost:3000/api/order/${orderId}/status`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ status: status })
+          });
+
+          var data = await res.json().catch(function () { return {}; });
+          if (!res.ok) throw new Error(data.message || data.error || "HTTP " + res.status);
+
+          await loadOrders();
+        } catch (error) {
+          console.error("Error updating order status:", error);
+          alert("Failed to update status: " + error.message);
+        }
+      }
+
+      document.addEventListener("DOMContentLoaded", loadOrders);
+    </script>
+  </body>
+</html>
+
+
+

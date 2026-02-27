@@ -1,0 +1,346 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script>
+      if (sessionStorage.getItem("adminLoggedIn") !== "true") {
+        window.location.href = "login.html";
+      }
+    </script>
+    <title>Visya Admin Dashboard</title>
+    <link rel="icon" type="image/png" href="../img/logos-removebg.png">
+    <link rel="stylesheet" href="assets/vendors/mdi/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="assets/vendors/ti-icons/css/themify-icons.css">
+    <link rel="stylesheet" href="assets/vendors/css/vendor.bundle.base.css">
+    <link rel="stylesheet" href="assets/vendors/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/visya-theme.css">
+  </head>
+  <body>
+    <div class="container-scroller">
+      <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+        <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-start">
+          <a class="navbar-brand d-flex align-items-center" href="index.html">
+            <img src="../img/logo-removebgnew.png"
+                 alt="Visya Food Hub"
+                 class="brand-logo">
+          </a>
+        </div>
+        <div class="navbar-menu-wrapper d-flex align-items-center justify-content-between">
+          <button class="navbar-toggler navbar-toggler-right align-self-center visya-hamburger" id="sidebarToggle" type="button" aria-label="Toggle sidebar">
+            <span class="mdi mdi-menu"></span>
+          </button>
+          <ul class="navbar-nav navbar-nav-right">
+            <li class="nav-item">
+              <a class="nav-link" href="#" id="logoutNav">
+                <i class="mdi mdi-logout me-1"></i>Logout
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      <div class="container-fluid page-body-wrapper">
+        <nav class="sidebar sidebar-offcanvas" id="sidebar">
+          <ul class="nav">
+            <li class="nav-item nav-profile">
+              <a href="#" class="nav-link">
+                <div class="nav-profile-text d-flex flex-column">
+                  <span class="fw-semibold text-white">Admin</span>
+                  <span class="text-secondary text-small">Administrator</span>
+                </div>
+              </a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="index.html">
+                <span class="menu-title">Dashboard</span>
+                <i class="mdi mdi-home menu-icon"></i>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="pages/orders.html">
+                <span class="menu-title">Orders</span>
+                <i class="mdi mdi-cart menu-icon"></i>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="pages/bookings.html">
+                <span class="menu-title">Bookings</span>
+                <i class="mdi mdi-calendar-check menu-icon"></i>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="pages/menu.html">
+                <span class="menu-title">Menu Management</span>
+                <i class="mdi mdi-food menu-icon"></i>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" id="logoutSidebar">
+                <span class="menu-title">Logout</span>
+                <i class="mdi mdi-logout menu-icon"></i>
+              </a>
+            </li>
+          </ul>
+        </nav>
+
+        <div class="main-panel main-content">
+          <div class="content-wrapper">
+            <div class="page-header">
+              <h3 class="page-title">
+                <span class="page-title-icon bg-gradient-primary text-white me-2">
+                  <i class="mdi mdi-home"></i>
+                </span> Visya Admin Dashboard
+              </h3>
+            </div>
+
+            <div class="row dashboard-row">
+              <div class="col-md-6 col-xl-3 stretch-card grid-margin">
+                <div class="card bg-gradient-primary card-img-holder text-white stat-card">
+                  <div class="card-body">
+                    <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
+                    <h4 class="font-weight-normal mb-3">Total Orders <i class="mdi mdi-cart mdi-24px float-end"></i></h4>
+                    <h2 class="mb-2" id="totalOrders">0</h2>
+                    <h6 class="card-text">Live from orders table</h6>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 col-xl-3 stretch-card grid-margin">
+                <div class="card bg-gradient-info card-img-holder text-white stat-card">
+                  <div class="card-body">
+                    <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
+                    <h4 class="font-weight-normal mb-3">Total Revenue <i class="mdi mdi-currency-inr mdi-24px float-end"></i></h4>
+                    <h2 class="mb-2" id="totalRevenue">Rs 0.00</h2>
+                    <h6 class="card-text">Live from orders table</h6>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 col-xl-3 stretch-card grid-margin">
+                <div class="card bg-gradient-danger card-img-holder text-white stat-card">
+                  <div class="card-body">
+                    <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
+                    <h4 class="font-weight-normal mb-3">Pending Orders <i class="mdi mdi-clock-outline mdi-24px float-end"></i></h4>
+                    <h2 class="mb-2" id="pendingOrders">0</h2>
+                    <h6 class="card-text">Needs attention</h6>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 col-xl-3 stretch-card grid-margin">
+                <div class="card bg-gradient-success card-img-holder text-white stat-card">
+                  <div class="card-body">
+                    <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
+                    <h4 class="font-weight-normal mb-3">Total Bookings <i class="mdi mdi-calendar-check mdi-24px float-end"></i></h4>
+                    <h2 class="mb-2" id="totalBookings">0</h2>
+                    <h6 class="card-text">Live from bookings table</h6>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 col-xl-3 stretch-card grid-margin">
+                <div class="card bg-gradient-primary card-img-holder text-white stat-card">
+                  <div class="card-body">
+                    <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
+                    <h4 class="font-weight-normal mb-3">Total Menu Items <i class="mdi mdi-food-fork-drink mdi-24px float-end"></i></h4>
+                    <h2 class="mb-2" id="totalMenuItems">0</h2>
+                    <h6 class="card-text">Live from menu table</h6>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-12 grid-margin">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">Order Status Summary</h4>
+                    <p class="mb-3">Current operational breakdown</p>
+                    <span class="badge badge-available me-2" id="summaryOrders">Orders: 0</span>
+                    <span class="badge badge-pending me-2" id="summaryPending">Pending: 0</span>
+                    <span class="badge badge-unavailable" id="summaryBookings">Bookings: 0</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-12 grid-margin">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">Business Summary</h4>
+                    <div class="row">
+                      <div class="col-lg-8 mb-4 mb-lg-0">
+                        <div class="chart-wrap">
+                          <canvas id="businessBarChart"></canvas>
+                        </div>
+                      </div>
+                      <div class="col-lg-4">
+                        <div class="chart-wrap">
+                          <canvas id="businessDonutChart"></canvas>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <footer class="footer">
+            <div class="d-sm-flex justify-content-center justify-content-sm-between">
+              <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Visya Admin Dashboard</span>
+              <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Built for Visya Restaurant</span>
+            </div>
+          </footer>
+        </div>
+      </div>
+    </div>
+
+    <script src="assets/vendors/js/vendor.bundle.base.js"></script>
+    <script src="assets/vendors/chart.js/chart.umd.js"></script>
+    <script src="assets/js/off-canvas.js"></script>
+    <script src="assets/js/misc.js"></script>
+    <script src="assets/js/settings.js"></script>
+    <script src="assets/js/todolist.js"></script>
+    <script src="assets/js/jquery.cookie.js"></script>
+    <script src="assets/js/visya-admin.js"></script>
+    <script>
+      var barChartInstance = null;
+      var donutChartInstance = null;
+
+      function safeNumber(value) {
+        var num = Number(value || 0);
+        return Number.isFinite(num) ? num : 0;
+      }
+
+      async function getJson(url) {
+        var response = await fetch(url);
+        if (!response.ok) throw new Error("HTTP " + response.status);
+        return response.json();
+      }
+
+      function renderBusinessCharts(data) {
+        if (typeof Chart === "undefined") return;
+
+        var barCanvas = document.getElementById("businessBarChart");
+        var donutCanvas = document.getElementById("businessDonutChart");
+        if (!barCanvas || !donutCanvas) return;
+
+        if (barChartInstance) barChartInstance.destroy();
+        if (donutChartInstance) donutChartInstance.destroy();
+
+        barChartInstance = new Chart(barCanvas, {
+          type: "bar",
+          data: {
+            labels: ["Orders", "Bookings", "Menu Items"],
+            datasets: [
+              {
+                data: [data.totalOrders, data.totalBookings, data.totalMenuItems],
+                backgroundColor: ["#5f6f52", "#a9b388", "#ff7a00"],
+                borderRadius: 8
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { display: false }
+            },
+            scales: {
+              y: {
+                beginAtZero: true,
+                ticks: { precision: 0 }
+              }
+            }
+          }
+        });
+
+        donutChartInstance = new Chart(donutCanvas, {
+          type: "doughnut",
+          data: {
+            labels: ["Completed", "Pending", "Cancelled"],
+            datasets: [
+              {
+                data: [data.completedOrders, data.pendingOrders, data.cancelledOrders],
+                backgroundColor: ["#5f6f52", "#ff9f43", "#ff7a00"],
+                borderWidth: 0
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            aspectRatio: 1.2,
+            plugins: {
+              legend: {
+                position: "bottom"
+              }
+            }
+          }
+        });
+      }
+
+      async function loadDashboardData() {
+        var totalOrdersEl = document.getElementById("totalOrders");
+        var totalRevenueEl = document.getElementById("totalRevenue");
+        var pendingOrdersEl = document.getElementById("pendingOrders");
+        var totalBookingsEl = document.getElementById("totalBookings");
+        var totalMenuItemsEl = document.getElementById("totalMenuItems");
+        var summaryOrdersEl = document.getElementById("summaryOrders");
+        var summaryPendingEl = document.getElementById("summaryPending");
+        var summaryBookingsEl = document.getElementById("summaryBookings");
+
+        var totals = {
+          totalOrders: 0,
+          totalRevenue: 0,
+          pendingOrders: 0,
+          totalBookings: 0,
+          totalMenuItems: 0,
+          completedOrders: 0,
+          cancelledOrders: 0
+        };
+
+        try {
+          var results = await Promise.allSettled([
+            getJson("http://localhost:3000/api/order/stats"),
+            getJson("http://localhost:3000/api/booking"),
+            getJson("http://localhost:3000/api/menu/admin")
+          ]);
+
+          if (results[0].status === "fulfilled") {
+            totals.totalOrders = safeNumber(results[0].value.totalOrders);
+            totals.totalRevenue = safeNumber(results[0].value.totalRevenue);
+            totals.pendingOrders = safeNumber(results[0].value.pendingOrders);
+            totals.completedOrders = safeNumber(results[0].value.completedOrders);
+            totals.cancelledOrders = safeNumber(results[0].value.cancelledOrders);
+          }
+
+          if (results[1].status === "fulfilled" && Array.isArray(results[1].value)) {
+            totals.totalBookings = results[1].value.length;
+          }
+
+          if (results[2].status === "fulfilled" && Array.isArray(results[2].value)) {
+            totals.totalMenuItems = results[2].value.length;
+          }
+        } catch (error) {
+          console.error("Dashboard data load error:", error);
+        }
+
+        if (totalOrdersEl) totalOrdersEl.textContent = String(totals.totalOrders);
+        if (totalRevenueEl) totalRevenueEl.textContent = "Rs " + totals.totalRevenue.toFixed(2);
+        if (pendingOrdersEl) pendingOrdersEl.textContent = String(totals.pendingOrders);
+        if (totalBookingsEl) totalBookingsEl.textContent = String(totals.totalBookings);
+        if (totalMenuItemsEl) totalMenuItemsEl.textContent = String(totals.totalMenuItems);
+        if (summaryOrdersEl) summaryOrdersEl.textContent = "Orders: " + totals.totalOrders;
+        if (summaryPendingEl) summaryPendingEl.textContent = "Pending: " + totals.pendingOrders;
+        if (summaryBookingsEl) summaryBookingsEl.textContent = "Bookings: " + totals.totalBookings;
+
+        renderBusinessCharts(totals);
+      }
+
+      document.addEventListener("DOMContentLoaded", loadDashboardData);
+    </script>
+  </body>
+</html>
+
+

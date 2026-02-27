@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- browser tab  -->
+    <title> Visya </title>
+    <link rel="icon" type="image/png" href="img/logos-removebg.png">
+
+    <!-- css styling page  -->
+    <!-- <link href="style.css" rel="stylesheet" /> -->
+    <link rel="stylesheet" href="styleuser.css" />
+
+    <!-- front & icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- js alter -->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <!-- emailjs -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"> </script>
+
+    <script type="text/javascript">
+        (function () {
+            emailjs.init("p4_v6QLAONTAlLMsg");   // (api-key- emailjs )
+        })(); 
+    </script>
+
+    <!-- Load Components -->
+    <script src="components/load-components.js"></script>
+
+<body>
+    
+    <!-- navbar -->
+    <div id="navbar-container"></div>
+
+    <!-- table booking -->
+
+    <div class="booking1">
+      <div >
+        <!-- MAP (desktop only) -->
+        <!-- <div class="booking-map">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=..."
+            loading="lazy">
+          </iframe>
+        </div> -->
+
+        <!-- BOOKING FORM (always visible) -->
+        <div class="book-table">
+          <h2>Book A Table</h2>
+          <form class="details" onsubmit="event.preventDefault(); handleBooking();">
+            <input type="text" id="name" placeholder="your name">
+            <input type="email" id="email" placeholder="your email">
+            <input type="text" id="number" placeholder="phone number">
+            <select id="myDropdown">
+              <option value="">--- how many person ---</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+            </select>
+            <input type="date">
+            <button type="submit">Book Now</button>
+          </form>
+        </div>
+      </div>
+    </div>   
+
+    <!-- footer content -->
+    <div id="footer-container"></div>
+</body>
+
+<!-- javascript page  -->
+
+<script src="food.js"></script>
+
+</html>
