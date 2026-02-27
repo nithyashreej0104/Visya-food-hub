@@ -27,7 +27,7 @@ function loadComponent(elementId, filePath) {
 
 // Configure navbar based on current page
 function configureNavbar() {
-    const currentPage = window.location.pathname.split('/').pop() || 'main.html';
+    const currentPage = window.location.pathname.split('/').pop() || 'index.html';
     
     const orderOnlineBtn = document.querySelector('.order-online-btn');
     const cartIconBtn = document.querySelector('.cart-icon-btn');
@@ -150,4 +150,3 @@ document.addEventListener("DOMContentLoaded", function() {
         loadComponent('footer-container', 'components/footer.html');
     }
 });
-

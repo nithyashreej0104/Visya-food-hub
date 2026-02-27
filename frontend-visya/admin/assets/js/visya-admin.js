@@ -41,7 +41,7 @@
   }
 
   function bindLogoutLinks() {
-    var logoutTarget = window.location.pathname.includes("/admin/pages/") ? "../../main.html" : "../main.html";
+    var logoutTarget = window.location.pathname.includes("/admin/pages/") ? "../../index.html" : "../index.html";
     ["logoutSidebar", "logoutNav"].forEach(function (id) {
       var el = document.getElementById(id);
       if (!el) return;

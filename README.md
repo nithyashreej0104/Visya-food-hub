@@ -107,7 +107,7 @@ Open `frontend-visya` folder in VS Code.
 Use Live Server to run:
 
 ```text
-main.html
+index.html
 ```
 
 ---
