@@ -1,6 +1,6 @@
-﻿# 🍔 VISYA FOOD HUB – Full Stack Restaurant Management System
+# 🍔 VISYA FOOD HUB – Full Stack Restaurant Management System
 
-A full-stack restaurant web application built using HTML, CSS, JavaScript, Node.js, Express, and MySQL.
+A full-stack restaurant management web application built using HTML, CSS, JavaScript, Node.js, Express.js, and MySQL.
 
 This project demonstrates real-world full-stack development including admin management, API integration, database operations, authentication, and responsive UI design.
 
@@ -62,8 +62,9 @@ This project provides a simple digital solution that allows:
 
 ## 🗂️ Project Structure
 
+
 ```text
-food/
+Visya-food-hub/
 │
 ├── backend-visya/
 │   ├── routes/
@@ -71,11 +72,14 @@ food/
 │   ├── server.js
 │   └── .env
 │
-├── frontend-visya/
+├── docs/              # Frontend files (used for GitHub Pages deployment)
 │   ├── admin/
 │   ├── img/
 │   ├── css/
-│   └── js/
+│   ├── js/
+│   └── index.html
+│
+├── screenshots/
 │
 └── README.md
 ```
@@ -102,14 +106,13 @@ Make sure:
 
 ### Frontend Setup
 
-Open `frontend-visya` folder in VS Code.
+The frontend is located in the `docs` folder (used for GitHub Pages deployment).
 
-Use Live Server to run:
+Open the `docs` folder in VS Code and run:
 
-```text
 index.html
-```
 
+You can use **Live Server extension** to preview the website locally.
 ---
 
 ## 🌐 API Endpoints
@@ -139,6 +142,7 @@ index.html
 
 ---
 
+
 ## 📸 Screenshots
 
 ### 🖥 Home Page (Desktop)
@@ -161,6 +165,21 @@ index.html
 
 ---
 
+## 🌐 Live Demo
+
+Frontend hosted using GitHub Pages:
+
+https://nithyashreej0104.github.io/Visya-food-hub/
+
+This demo showcases the frontend UI and application flow of the system.
+
+Note:  
+The frontend UI is deployed using GitHub Pages. Some dynamic features such as menu loading, order management, bookings, and admin dashboard statistics require the Node.js backend and MySQL database.
+
+The backend APIs are included in this repository but are not deployed in the live demo.
+
+---
+
 ## 📈 Future Enhancements
 
 - JWT Authentication
@@ -178,7 +197,6 @@ Aspiring Full Stack Developer
 
 This project was built as a portfolio demonstration of full-stack development skills.
 
----
 
 ## 📄 License
 
